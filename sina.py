@@ -279,10 +279,19 @@ def getframe(fname,strict=1):
 		
 	for i in xrange(w):
 		for j in xrange(h):
+			(r,g,b) = frame[i,j]
+
+			'''
 			if frame[i,j]>(200,200,200):
 				frame[i,j]=(255,255,255)
 			if frame[i,j]!=(255,255,255):
 				frame[i,j]=(0,0,0)
+			'''
+			if (150<r and 100<g<240 and b<150) or (40<r<190 and g<90 and 70<b<140) or (r<50 and g<50 and 30<b<170) or (r<120 and 40<g<180 and b<120) or (r<80 and 50<g<170 and 40<b<160) or (140<r and g<80 and b<80) or (40<r<190 and g<120 and b<120) or (r<30 and g<30 and b<30):
+				frame[i,j]=(0,0,0)
+			if frame[i,j] != (0,0,0):
+				frame[i,j] = (255,255,255)
+
 	im=im.convert('L')	
 	im=removedot(im)
 	#im=floodfillfilter(im,4,20)
@@ -434,7 +443,7 @@ def normalize(im):
 	# divide im
 	regions = imdiv(im)
 	for k in xrange(len(regions)):
-		regions[k] = dorotate(regions[k])
+		#regions[k] = dorotate(regions[k])
 		regions[k] = purify( docrop(regions[k]) )
 	
 	return regions
